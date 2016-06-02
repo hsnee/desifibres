@@ -1,4 +1,4 @@
-*CUTE - Correlation Utilities and Two-point Estimates
+# CUTE - Correlation Utilities and Two-point Estimates
 
 
 1 Introduction.
@@ -450,7 +450,7 @@ Regarding bugs, suggestions, questions or petitions, feel free to contact
 the author:
     David Alonso: david dot alonso at uam dot es 
 
-*Edit*
+# Edit
 
 Edited to include Hawkins-Maddox weighting to correct small-scall
 correlation function. Implemented into angular, monopole and xi(sigma,pi).
