@@ -1,4 +1,4 @@
-*CUTE - Correlation Utilities and Two-point Estimates*
+*CUTE - Correlation Utilities and Two-point Estimates
 
 
 1 Introduction.
