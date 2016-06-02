@@ -1,0 +1,128 @@
+\documentclass[12pt,helvetica,margin=2.5cm,a4paper,final]{iopart}
+\usepackage{iopams}  
+\linespread{1.1}
+\usepackage{graphicx}
+\usepackage[breaklinks=true,colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+
+\newenvironment{nstabbing}
+  {\setlength{\topsep}{0pt}%
+   \setlength{\partopsep}{0pt}%
+   \tabbing}
+  {\endtabbing}
+
+\begin{document}
+%\title{Documentation}
+
+\section{Code} 
+
+\subsection{make\_catalogues.py}
+$\mathtt{make\_catalogues.py}$ is a function to write the catalogues suitable to be used in CUTE. \emph{make\_cat()}, the function inside $\mathtt{make\_catalogues.py}$ assumes that the full mock catalogue \emph{aardvark\_mockcat.hdf5}, and the full random catalogue \emph{rancat.hdf5} are in the working directory and it writes the new catalogues to the working directory.  The function takes in the following arguments.
+\subsubsection{magnitude}
+The r-band magnitude for the catalogues.
+\begin{description}
+\item[3] for r = 19.3
+\item[5] for r = 19.5
+\item[7] for r = 19.7
+\item[9] for r = 19.9
+\end{description}
+\subsubsection{weights}
+\begin{description}
+\item[weights=0] does not assign any weights to the new catalogues.
+\item[weights=1] assigns unity weights for all the galaxies in the catalogues.
+\item[weights=2] assigns redshift-dependant weights to every galaxy given by the equation:
+\begin{equation}
+w_i = \frac{1}{1 + 4 \pi J_3 N(z)}
+\end{equation}
+it uses the same weights for the random catalogue.
+\item[weights=3] uses the function \emph{cell\_weights()} from $\mathtt{grid.py}$ to break the catalogue into cells of ra and sin (dec). At the moment this is set to 22 cells in ra and 12 cells in sin (dec) (about 6 degrees in each) assign weights for each galaxy in a given cell using the ratio in equation \ref{cell} for the same cell.
+\begin{equation}
+\label{cell}
+w_c = \frac{\textrm{Number of galaxies in complete catalogue}}{\textrm{Number of galaxies in targeted catalogue}}
+\end{equation}
+\item[weights=4] is a combination of 2 and 3.
+
+\end{description}
+\subsubsection{debug}
+using $\bold{debug=True}$ would get the function to plot the weights as it is going. This is very recommended to ensure the weights are being assigned as intended.
+There is also an option $\bold{superdebug=True}$ that would print the input/output catalogues (default is \emph{False})
+\subsubsection{skip\_randoms}
+$\bold{skip\_randoms=True}$ does not assign weights for the random catalogues (default is \emph{False})
+\subsubsection{same\_weights}
+$\bold{same\_weights=True}$ is used to assign the same weights that are calculated to the complete catalogue to the targeted catalogue (default is \emph{False}).
+
+\subsection{woftheta.c}
+\label{woftheta}
+Under \emph{/cosma/home/icc-sum1/CUTE2/CUTE/src/} you can find the function $\mathtt{woftheta.c}$ and its header $\mathtt{woftheta.h}$, this function is implemented in CUTE2 to add pair weights of 
+\begin{equation}
+w_\theta = \frac{1 + \omega(\theta)|_{all}}{1 + \omega(\theta)|_{targeted}}
+\end{equation}
+depending on the angular separation between each two galaxies. 
+The function takes a set of values in variable \emph{yy} for this ratio and interpolates between them. \emph{yy} can be changed for different magnitude limits etc. 
+$\mathtt{woftheta.c}$ is implemented in $\xi(r), \, \omega(\theta), \, \, \textrm{and} \, \, \xi(\sigma, \pi)$. It is defined in $\mathtt{common.h}$ and $\mathtt{Makefile}$ and edited into $\mathtt{correlator.c}$.
+
+$\bold{CUTE}$, or Correlation Utilities and Two-point Estimates, is written by David Alonso (c). For more information on CUTE, see: \href{arXiv:1210.1833v2}{arXiv:1210.1833v2}
+\subsection{grid.py}
+Under \emph{/cosma/home/icc-sum1/grid/} you can find the function \emph{cell\_counts} in $\mathtt{grid.py}$. By inputing the number of cells wanted in ra and sin(dec) and the paths to the complete and targeted catalogues (more comments in $\mathtt{grid.py}$), this function will count the number of galaxies in each cell and output the ratio of number of galaxies in the complete catalogue over the targeted catalogue as well as the boundaries of the cells in ra and sin(dec). $\mathtt{make\_catalogues.py}$ calls this function to assign cell weights $w_c$ to galaxies. This function takes the following arguments
+
+\subsubsection{complete}
+Path to the desired complete catalog.
+
+\subsubsection{targeted}
+Path to the desired targeted catalog.
+
+\subsubsection{numra}
+The number of cells in right ascension
+
+\subsubsection{numdec}
+The number of cells in sin (declination)
+
+\subsubsection{debug=False}
+Optional argument; plots the central cell if set to \emph{True}.
+
+\paragraph{}
+The function outputs a tuple including the weights, boundaries in ra, boundaries in sin(dec), number of galaxies per cell in complete catalog, number of galaxies per cell in targeted catalog; in that order.
+
+\subsection{grid\_output.py}
+Under \emph{/cosma/home/icc-sum1/grid/} there is also a function $\mathtt{grid\_output.py}$ written to make it easier to plot the outputs from $\mathtt{grid.py}$. This function takes the number of cells in ra and sin(dec), magnitude, bins (default=20), interpolation (default='none') and plots the ratio and the number per cell per square degrees in the both catalogues and the galaxy distribution. More information on how grid\_output reads the catalogues and so on in $\mathtt{grid\_output.py}$.
+
+\subsection{ang\_correction\_calc.py}
+Under \emph{/gpfs/data/icc-sum1/Catalogues} I wrote a function named \emph{ang\_cor()} in $\mathtt{ang\_correction\_calc.py}$ to create the $\omega_\theta$ correction (see section \ref{woftheta}). The function assumes the correlation text files are under the respective subfolders in Catalogues/ and uses logarithmic binning. The function takes the following arguments:
+
+\subsubsection{magnitude} The r-band magnitude. $\bold{3, 5, 7 \, \, \textrm{or} \, \, 9}$ (for r = 19.magnitude)
+
+\subsubsection{cell\_weights} If set to $\bold{cell\_weights=True}$, it will use correlations that have been made after the cell correction. $w_c$. This is recommended as to not double count.
+
+\subsubsection{j3\_weights} If set to $\bold{j3\_weights=True}$, it will use correlations that have been made after the $w_i$. Applying $w_i$ weights are not very meaningful for $\omega(\theta)$ so this option is mainly for comparison of the goodness of $\omega(\theta)$. 
+
+\subsubsection{debug} If set to $\bold{debug = True}$ the function will plot the $\omega_\theta$ ratio against $\theta$.
+
+\paragraph{} This function returns an array of the $\omega(\theta)$ values that can be used to replace \emph{yy} in $\mathtt{woftheta.c}$ above (subsection \ref{woftheta}).
+
+\subsection{show\_results.py}
+
+Under $/gpfs/data/icc-sum1/Catalogues/$, $\mathtt{show\_results.py}$ has two functions. \emph{show\_results\_single()} and \emph{show\_results\_triple} to plot and compare the correlations. The latter has two extra arguments to plot 3 correlations (complete; and targeted before and after the correction). The function takes the following arguments:
+\begin{description}
+
+\item[magnitude] 3, 5, 7 or 9.
+
+\item[cortype] Type of correlation, 'Angular' or 'Monopole'.
+
+\item[binning] Type of binning, 'LogBins' or 'LinBins'
+
+\item[correlation]
+
+For the triple function, correlation is the complete correlation, the remaining arguments for the triple function are:
+
+\item[targeted\_raw]
+\item[targeted\_corrected]
+The last three arguments should be one of the following strings:
+'all\_weights', 'j3\_weights', 'j3\_cell\_weights', 'j3\_woftheta\_weights', 'cell\_weights', 'no\_weights', 'woftheta\_weights', 'woftheta\_cell\_weights';
+ 
+with Complete/ or Targeted/ added before these strings for the single function.
+
+\end{description}
+
+\section{Correlations and Reproducibility of Results}
+I have created all possible combinations of corrections and variations of correlation functions under \emph{/gpfs/data/icc-sum1/Catalogues}. They are organised in hierarchically depending on magnitude, type of correlation, type of binning, completeness, and type(s) of corrections, in that order. The options to change the binning is in the $\mathtt{Makefile}$ and the option to change the type of correlation is in the $\mathtt{param.txt}$ file. In every subdirectory there is all the files needed to recreate that correlation and a $\mathtt{Readme}$ file describing these files. Each subdirectory also has the version of CUTE that is suitable to reproduce it. To change the angular separation-dependant correction $w_\theta$, you will need to recompile CUTE (see section \ref{woftheta} above).
+\end{document}
+	  
