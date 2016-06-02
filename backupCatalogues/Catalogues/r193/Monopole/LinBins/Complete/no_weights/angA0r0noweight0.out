@@ -1,0 +1,100 @@
+
+-----------------------------------------------------------
+|| CUTE - Correlation Utilities and Two-point Estimation ||
+-----------------------------------------------------------
+
+Initializing random number generator
+First random number : 1394787465 
+Using 24 threads 
+
+*** Reading run parameters 
+  Using estimator: LS
+
+*** Setting z-distance relation from the cosmology:
+ - Omega_M = 0.300 
+ - Omega_L = 0.700 
+ - w       = -1.000   
+
+*** Monopole correlation function: 
+ - Range: 0.000 < r < 150.150 Mpc/h
+ - #bins: 64
+ - Resolution: D(r) = 2.346 Mpc/h
+ - Using a brute-force approach 
+
+*** Reading catalog from file Aardvark.hdf5
+CUTE: Reading HDF file 
+
+*** Reading catalog from file Random.hdf5
+CUTE: Reading HDF file 
+
+*** Boxing catalogs 
+  There will be (70,123,70) = 602700 boxes in total
+  Boxes will be (dx,dy,dz) = (37.775,37.987,37.971) 
+  There are objects in 31316 out of 602700 boxes 
+  There are objects in 35013 out of 602700 boxes 
+
+*** Correlating 
+ - Auto-correlating data 
+    Relative time ellapsed 00:06:26 
+ - Auto-correlating random 
+    Relative time ellapsed 00:19:22 
+ - Cross-correlating 
+    Relative time ellapsed 00:25:52 
+
+*** Writing output file mono.dat 
+
+*** Cleaning up
+             Done !!!             
+
+------------------------------------------------------------
+Sender: LSF System <hpcadmin@m4140>
+Subject: Job 535810: <CUTE> Done
+
+Job <CUTE> was submitted from host <cosma-e> by user <icc-sum1> in cluster <cosma-p_cluster1>.
+Job was executed on host(s) <12*m4140>, in queue <cosma>, as user <icc-sum1> in cluster <cosma-p_cluster1>.
+</cosma/home//icc-sum1> was used as the home directory.
+</gpfs/data/icc-sum1/Catalogues/r193/Monopole/LinBins/Complete/no_weights> was used as the working directory.
+Started at Tue Sep 15 19:00:46 2015
+Results reported at Tue Sep 15 19:52:36 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash -l
+#
+# Batch script for bash users
+#
+#BSUB -L /bin/bash
+#BSUB -n 12
+#BSUB -R "span[hosts=1]"
+#BSUB -x
+#BSUB -J CUTE
+#BSUB -oo angA0r0noweight0.out
+#BSUB -q cosma
+#BSUB -P durham
+#
+# 1 hour wall clock time limit
+#BSUB -W 10:00
+#BSUB -M 60000
+export OMP_NUM_THREADS=24
+
+# Run the program
+module load python/2.7.3
+./CUTE param.txt
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :  68652.97 sec.
+    Max Memory :       330 MB
+    Max Swap   :       654 MB
+
+    Max Processes  :         4
+    Max Threads    :        28
+
+The output (if any) is above this job summary.
+

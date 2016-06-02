@@ -1,0 +1,62 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import h5py
+
+f = h5py.File('./Random.hdf5','r')
+
+z0   = f['z'][...]
+ra0  = f['ra'][...]
+dec0 = f['dec'][...]
+w0   = f['weight'][...]
+f.close()
+
+idx1 = np.where((z0>0.02)&(z0<0.08))
+#idx2 = np.where((z0>0.2)&(z0<0.4))
+#idx3 = np.where((z0>0.6)&(z0<1.4))
+
+idx1 = idx1[0]
+#idx2 = idx2[0]
+#idx3 = idx3[0]
+
+z1   = z0[idx1]
+ra1  = ra0[idx1]
+dec1 = dec0[idx1]
+#w1   = w0[idx1]
+
+plt.figure()
+plt.plot(ra1,dec1,'b,')
+plt.xlabel('ra')
+plt.ylabel('dec')
+plt.title('Complete aardvark at r = 19.7 between 0.0<z<0.1')
+plt.show()
+
+#newf1  = h5py.File('./random_slice4.hdf5', "w")
+#h5ra  = newf1.create_dataset('ra',data=ra1)
+#h5dec = newf1.create_dataset('dec',data=dec1)
+#h5z   = newf1.create_dataset('z',data=z1)
+#h5w   = newf1.create_dataset('weight',data=w1)
+#newf1.close()
+
+#z2   = z0[idx2]
+#ra2  = ra0[idx2]
+#dec2 = dec0[idx2]
+#w2   = w0[idx2]
+
+#newf2  = h5py.File('./random_slice2.hdf5', "w")
+#h5ra2  = newf2.create_dataset('ra',data=ra2)
+#h5dec2 = newf2.create_dataset('dec',data=dec2)
+#h5z2   = newf2.create_dataset('z',data=z2)
+#h5w2   = newf2.create_dataset('weight',data=w2)
+#newf2.close()
+
+#z3   = z0[idx3]
+#ra3  = ra0[idx3]
+#dec3 = dec0[idx3]
+#w3   = w0[idx3]
+
+#newf3  = h5py.File('./random_slice3.hdf5', "w")
+#h5ra3  = newf3.create_dataset('ra',data=ra3)
+#h5dec3 = newf3.create_dataset('dec',data=dec3)
+#h5z3   = newf3.create_dataset('z',data=z3)
+#h5w3   = newf3.create_dataset('weight',data=w3)
+#newf3.close()

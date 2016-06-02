@@ -1,0 +1,21 @@
+# input-output files and parameters
+data_filename= Aardvark.hdf5
+random_filename= Random.hdf5
+output_filename= mono.dat
+input_format= 5
+mask_filename= null
+z_dist_filename= null
+num_lines= all 
+# estimation parameters
+corr_type= monopole
+corr_estimator= LS
+np_rand_fact= null
+# cosmological parameters
+omega_M= 0.3
+omega_L= 0.7
+w= -1
+# pixels for radial correlation
+radial_aperture= 1
+# pm parameters
+use_pm= 0
+n_pix_sph= 2048 

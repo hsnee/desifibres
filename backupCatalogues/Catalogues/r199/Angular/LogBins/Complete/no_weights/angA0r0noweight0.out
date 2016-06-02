@@ -1,0 +1,95 @@
+
+-----------------------------------------------------------
+|| CUTE - Correlation Utilities and Two-point Estimation ||
+-----------------------------------------------------------
+
+Initializing random number generator
+First random number : 603422808 
+Using 24 threads 
+
+*** Reading run parameters 
+  Using estimator: LS
+
+*** Angular correlation function: 
+ - Range: 0.000 < theta < 10.000 (deg)
+ - #bins: 40
+ - Logarithmic binning with 10 bins per decade
+ - Using a brute-force approach 
+
+*** Reading catalog from file Aardvark.hdf5
+CUTE: Reading HDF file 
+
+*** Reading catalog from file Random.hdf5
+CUTE: Reading HDF file 
+
+*** Boxing catalogs 
+  There will be 14450 pixels in total
+  Pixel resolution is 1.6896 deg 
+  There are objects in 2142 out of 14450 pixels 
+  There are objects in 2142 out of 14450 pixels 
+
+*** Correlating 
+ - Auto-correlating data 
+    Relative time ellapsed 01:43:12 
+ - Auto-correlating random 
+    Relative time ellapsed 01:08:25 
+ - Cross-correlating 
+    Relative time ellapsed 02:51:51 
+
+*** Writing output file ang.dat 
+
+*** Cleaning up
+             Done !!!             
+
+------------------------------------------------------------
+Sender: LSF System <hpcadmin@m4014>
+Subject: Job 533378: <CUTE> Done
+
+Job <CUTE> was submitted from host <cosma-e> by user <icc-sum1> in cluster <cosma-p_cluster1>.
+Job was executed on host(s) <12*m4014>, in queue <cosma>, as user <icc-sum1> in cluster <cosma-p_cluster1>.
+</cosma/home//icc-sum1> was used as the home directory.
+</gpfs/data/icc-sum1/Catalogues/r199/Angular/LogBins/Complete/no_weights> was used as the working directory.
+Started at Wed Sep  9 18:08:26 2015
+Results reported at Wed Sep  9 23:51:58 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash -l
+#
+# Batch script for bash users
+#
+#BSUB -L /bin/bash
+#BSUB -n 12
+#BSUB -R "span[hosts=1]"
+#BSUB -x
+#BSUB -J CUTE
+#BSUB -oo angA0r0noweight0.out
+#BSUB -q cosma
+#BSUB -P durham
+#
+# 1 hour wall clock time limit
+#BSUB -W 10:00
+#BSUB -M 60000
+export OMP_NUM_THREADS=24
+
+# Run the program
+module load python/2.7.3
+./CUTE param.txt
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   : 471333.25 sec.
+    Max Memory :       423 MB
+    Max Swap   :       747 MB
+
+    Max Processes  :         4
+    Max Threads    :        28
+
+The output (if any) is above this job summary.
+

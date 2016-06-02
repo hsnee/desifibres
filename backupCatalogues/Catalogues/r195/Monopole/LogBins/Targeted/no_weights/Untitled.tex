@@ -1,0 +1,35 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+\title{README}
+\author{{\small Husni Almoubayyed}}
+\date{04/09/15}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+\section{CUTE}
+\paragraph{}This variation of CUTE expects weights, so that CUTE conditions across different correlations are the same. To use this version with no weights, assign unity weights to all the galaxies in the relevant catalogues.
+This variation of CUTE uses \emph{linear} binning. 
+\break
+\break
+\noindent This variation of CUTE is not edited to include pair-weights.
+\break
+\break
+\noindent CUTE is written by David Alonso (c)
+
+\section{param.txt}
+\paragraph{} The parameter file should point at $\mathtt{Aardvark.hdf5}$ and $\mathtt{Random.hdf5}$
+Make sure the Aardvark file is correct (whether it is the complete or targeted catalogue). Random is the same for both and shouldn't matter. Both should be assigned unity weights if used with no weights.
+
+\section{Batch Script}
+\paragraph{} Required to run on CosMa, this file points at CUTE and param.txt
+
+\paragraph{} 
+
+\end{document}  
