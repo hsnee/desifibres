@@ -1,8 +1,8 @@
-// // // // // // // // // // // // // // // // // // // // // // // // // // // //  //
-// This is a function to be used in CUTE to weigh the galaxy pairs. The weighting is //
-// the 1 + w(theta) ratio from the angular pair correlation function. This function	 //
-// expects a header "woftheta.h"													 //
-// // // // // // // // // // 								   // // // // // // //  //
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+// This is a function to be used in CUTE to weigh the galaxy pairs. The weighting is//
+// the 1 + w(theta) ratio from the angular pair correlation function. This function //
+// expects a header "woftheta.h"       						    //
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 #include <stdio.h>
 #include "woftheta.h"
